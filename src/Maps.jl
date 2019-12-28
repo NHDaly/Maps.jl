@@ -4,7 +4,14 @@ using Makie
 
 using FileIO, Colors, JSON
 
-function globe()
+"""
+    globe(args...)
+Display a 3D globe in a Makie plot.
+
+Any extra plotting arguments will be passed-through to Makie.
+See [Makie.plot](@ref) arguments for more details.
+"""
+function globe(args...; kwargs...)
     earth = try
         load(download("https://svs.gsfc.nasa.gov/vis/a000000/a002900/a002915/bluemarble-2048.png"))
     catch e
@@ -12,16 +19,31 @@ function globe()
         rand(RGBAf0, 100, 100) # don't error test when e.g. offline
     end;
     m = GLNormalUVMesh(Sphere(Point3f0(0), 1f0), 60);
-    scene = mesh(m, color = earth, shading = false);
+    scene = mesh(m, args...; color = earth, shading = false, kwargs...);
     Makie.AbstractPlotting.cam3d_cad!(scene)
 
     scene
 end
 
 
-function usa(resolution = 0.025)
+"""
+    usa(resolution = 0.025, args...)
+Display a 2D map of the United States, on an Equirectangular projection.
+
+Any extra plotting arguments will be passed-through to Makie.
+See [Makie.plot](@ref) arguments for more details.
+
+Data comes from http://openstreetmap.org.
+"""
+function usa(resolution = 0.015, args...; kwargs...)
     allregions = usa_polygons()
-    scene = plot_regions(allregions, resolution = resolution)
+    scene = plot_regions(allregions, args...; resolution = resolution, kwargs...)
+    text!(scene,
+          "© OpenStreetMap contributors",
+          position = (0,0),
+          color = :red,
+         )
+    scene
 end
 function usa_polygons()
     USA_json = JSON.parse(open("data/nominatim/USA.json", "r"))
