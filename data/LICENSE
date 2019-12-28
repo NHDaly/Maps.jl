@@ -1,0 +1,7 @@
+- data/nominatim:
+    This directory contains data downloaded from
+    [https://nominatim.openstreetmap.org](https://nominatim.openstreetmap.org).
+    The data is copyright OpenStreetMap contributors, covered by this license:
+    data/nominatim/LICENSE.md.
+                
+
