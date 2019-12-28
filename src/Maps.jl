@@ -4,6 +4,9 @@ using Makie
 
 using FileIO, Colors, JSON
 
+earth_img() = "https://svs.gsfc.nasa.gov/vis/a000000/a002900/a002915/bluemarble-2048.png"
+mars_img() = "https://www.jpl.nasa.gov/spaceimages/images/largesize/PIA23518_hires.jpg"
+
 """
     globe(args...)
 Display a 3D globe in a Makie plot.
@@ -11,11 +14,11 @@ Display a 3D globe in a Makie plot.
 Any extra plotting arguments will be passed-through to Makie.
 See [Makie.plot](@ref) arguments for more details.
 """
-function globe(args...; kwargs...)
+function globe(image=earth_img(), args...; kwargs...)
     earth = try
-        load(download("https://svs.gsfc.nasa.gov/vis/a000000/a002900/a002915/bluemarble-2048.png"))
+        load(download(image))
     catch e
-        @warn("Downloading the earth failed. Using random image, so this test will fail! (error: $e)")
+        @warn("Downloading the image failed. Using random image, so this test will fail! (error: $e)")
         rand(RGBAf0, 100, 100) # don't error test when e.g. offline
     end;
     m = GLNormalUVMesh(Sphere(Point3f0(0), 1f0), 60);
