@@ -8,7 +8,7 @@ earth_img() = "https://svs.gsfc.nasa.gov/vis/a000000/a002900/a002915/bluemarble-
 mars_img() = "https://www.jpl.nasa.gov/spaceimages/images/largesize/PIA23518_hires.jpg"
 
 """
-    globe(args...)
+    globe(img = earth_img(), args...)
 Display a 3D globe in a Makie plot.
 
 Any extra plotting arguments will be passed-through to Makie.

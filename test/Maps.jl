@@ -8,6 +8,9 @@ end
     display(Maps.globe(Maps.mars_img()))
 end
 
-@testset "usa" begin
+@testset "usa small" begin
+    display(Maps.usa(0.001))
+end
+@testset "usa default" begin
     display(Maps.usa())
 end
